@@ -35,7 +35,7 @@ const Index = () => {
       <footer className="bg-muted py-6">
         <div className="container mx-auto px-4">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Newsy Nibbler - All rights reserved
+            © {new Date().getFullYear()} Newsy Nibbler - murugan
           </p>
         </div>
       </footer>
