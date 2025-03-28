@@ -1,12 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import Header from "../components/Header";
+import ArticlesFilter from "../components/ArticlesFilter";
+import ArticlesList from "../components/ArticlesList";
+import { articles } from "../data/articles";
+import { listArticles, filterArticles } from "../utils/articleUtils";
 
 const Index = () => {
+  const [filteredArticles, setFilteredArticles] = useState(articles);
+
+  const handleFilterChange = (filters: {
+    category?: string;
+    startDate?: string;
+    endDate?: string;
+  }) => {
+    const filtered = filterArticles(articles, filters);
+    setFilteredArticles(filtered);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <div className="mb-2">
+            <h2 className="text-3xl font-bold mb-6">Latest News</h2>
+            <ArticlesFilter onFilterChange={handleFilterChange} />
+          </div>
+          <div className="border-t mt-4 pt-6">
+            <ArticlesList articles={filteredArticles} />
+          </div>
+        </div>
+      </main>
+      <footer className="bg-muted py-6">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Newsy Nibbler - All rights reserved
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
