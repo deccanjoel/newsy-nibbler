@@ -17,14 +17,14 @@ interface ArticlesFilterProps {
 }
 
 const ArticlesFilter = ({ onFilterChange }: ArticlesFilterProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
     onFilterChange({
-      category: value || undefined,
+      category: value === "all" ? undefined : value,
       startDate: startDate ? format(startDate, "yyyy-MM-dd") : undefined,
       endDate: endDate ? format(endDate, "yyyy-MM-dd") : undefined,
     });
@@ -33,7 +33,7 @@ const ArticlesFilter = ({ onFilterChange }: ArticlesFilterProps) => {
   const handleStartDateChange = (date: Date | undefined) => {
     setStartDate(date);
     onFilterChange({
-      category: selectedCategory || undefined,
+      category: selectedCategory === "all" ? undefined : selectedCategory,
       startDate: date ? format(date, "yyyy-MM-dd") : undefined,
       endDate: endDate ? format(endDate, "yyyy-MM-dd") : undefined,
     });
@@ -42,14 +42,14 @@ const ArticlesFilter = ({ onFilterChange }: ArticlesFilterProps) => {
   const handleEndDateChange = (date: Date | undefined) => {
     setEndDate(date);
     onFilterChange({
-      category: selectedCategory || undefined,
+      category: selectedCategory === "all" ? undefined : selectedCategory,
       startDate: startDate ? format(startDate, "yyyy-MM-dd") : undefined,
       endDate: date ? format(date, "yyyy-MM-dd") : undefined,
     });
   };
 
   const resetFilters = () => {
-    setSelectedCategory("");
+    setSelectedCategory("all");
     setStartDate(undefined);
     setEndDate(undefined);
     onFilterChange({});
@@ -64,7 +64,7 @@ const ArticlesFilter = ({ onFilterChange }: ArticlesFilterProps) => {
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
